@@ -290,4 +290,4 @@ Notice that the value of `travelId` needs to match the id number in the URL. In 
 
 ## License
 [MIT](https://github.com/ChrisRDavila/ParksLookUpAPI.Solution/blob/main/License.txt)
-Copyright (c) 2023 Chris Ross Davila
+Copyright (c) 2023 Christopher Ross Davila
