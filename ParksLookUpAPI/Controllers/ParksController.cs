@@ -18,7 +18,7 @@ namespace ParksLookUpAPI.Controllers
 
     // GET api/parks
     [HttpGet]
-    public async Task<List<Park>> Get(string name, string state, string features, int minRating)
+    public async Task<List<Park>> Get(string name, string state, string features, int minimum_rating)
     {
       IQueryable<Park> query = _db.Parks.AsQueryable();
 
@@ -37,9 +37,9 @@ namespace ParksLookUpAPI.Controllers
         query = query.Where(entry => entry.Features == features);
       }
 
-      if (minRating > 0)
+      if (minimum_rating > 0)
       {
-        query = query.Where(entry => entry.Rating >= minRating);
+        query = query.Where(entry => entry.Rating >= minimum_rating);
       }
 
       return await query.ToListAsync();
