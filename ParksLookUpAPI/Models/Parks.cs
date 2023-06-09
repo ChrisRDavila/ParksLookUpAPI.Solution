@@ -1,7 +1,12 @@
-namespace ProjectName.Models //update namespace here
+namespace ParksLookUpAPI.Models
 {
-  public class ClassName //create model class here
+  public class Park
   {
-    public int Id { get; set; }
+    public int ParkId { get; set; }
+    public string Name { get; set; }
+    public string State { get; set; }
+    public string Features { get; set; }
+    public int Rating { get; set; }
+
   }
 }
