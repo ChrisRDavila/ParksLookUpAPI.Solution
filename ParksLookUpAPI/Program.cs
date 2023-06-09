@@ -1,40 +1,40 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using ParksLookUpAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace ParksLookUpAPI
-{
-  class Program
-  {
-    static void Main(string[] args)
-    {
+var builder = WebApplication.CreateBuilder(args);
 
-      WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+builder.Services.AddControllers();
 
-      builder.Services.AddControllersWithViews();
-
-      builder.Services.AddDbContext<ProjectNameContext>(
-                        dbContextOptions => dbContextOptions
-                          .UseMySql(
-                            builder.Configuration["ConnectionStrings:DefaultConnection"], ServerVersion.AutoDetect(builder.Configuration["ConnectionStrings:DefaultConnection"]
-                          )
+builder.Services.AddDbContext<ParksLookupsApiContext>(
+                    dbContextOptions => dbContextOptions
+                    .UseMySql(
+                        builder.Configuration["ConnectionStrings:DefaultConnection"], 
+                        ServerVersion.AutoDetect(builder.Configuration["ConnectionStrings:DefaultConnection"]
                         )
-                      );
+                    )
+                );
 
-      WebApplication app = builder.Build();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
-      // app.UseDeveloperExceptionPage();
-      app.UseHttpsRedirection();
-      app.UseStaticFiles();
 
-      app.UseRouting();
+var app = builder.Build();
 
-      app.MapControllerRoute(
-          name: "default",
-          pattern: "{controller=Home}/{action=Index}/{id?}");
-
-      app.Run();
-    }
-  }
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
+else 
+{
+    app.UseHttpsRedirection();
+}
+
+
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
