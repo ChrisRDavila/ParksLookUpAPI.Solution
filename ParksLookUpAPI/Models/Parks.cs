@@ -1,3 +1,7 @@
+using System.ComponentModel.DataAnnotations;
+using ParksLookUpAPI.Models;
+using System.Collections.Generic;
+
 namespace ParksLookUpAPI.Models
 {
   public class Park

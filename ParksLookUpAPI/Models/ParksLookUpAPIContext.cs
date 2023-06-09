@@ -7,7 +7,7 @@ namespace ParksLookUpAPI.Models
   {
     public DbSet<Park> Parks { get; set; }
 
-    public ParksLookUpApiContext(DbContextOptions<ParksLookUpApiContext> options) : base(options)
+    public ParksLookUpAPIContext(DbContextOptions<ParksLookUpAPIContext> options) : base(options)
     {
     }
     protected override void OnModelCreating(ModelBuilder builder)

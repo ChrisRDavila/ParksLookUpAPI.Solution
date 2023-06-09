@@ -5,7 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddDbContext<ParksLookupsApiContext>(
+builder.Services.AddDbContext<ParksLookUpAPIContext>(
                     dbContextOptions => dbContextOptions
                     .UseMySql(
                         builder.Configuration["ConnectionStrings:DefaultConnection"], 
