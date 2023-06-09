@@ -5,8 +5,9 @@ using System;
 
 namespace ParksLookUpAPI.Controllers
 {
-  [Route("api/[controller]")]
   [ApiController]
+  [Route("api/v{version:apiVersion}/[controller]")]
+  [ApiVersion("2.0")]
   public class ParksController : ControllerBase
   {
     private readonly ParksLookUpAPIContext _db;
@@ -16,7 +17,7 @@ namespace ParksLookUpAPI.Controllers
       _db = db;
     }
 
-      // GET: api/travels
+      // GET: api/v2/travels
     [HttpGet]
     public async Task<IActionResult>  Get(string name, string state, string features, int filterRating, int? page)
     {
@@ -62,7 +63,7 @@ namespace ParksLookUpAPI.Controllers
       return Ok(response);      
     }
 
-    // GET: api/Parks/{id}
+    // GET: api/v2/Parks/{id}
     [HttpGet("{id}")]
     public async Task<ActionResult<Park>> GetPark(int id)
     {
@@ -76,7 +77,7 @@ namespace ParksLookUpAPI.Controllers
       return park;
     }
 
-    // GET: api/Parks/page
+    // GET: api/v2/Parks/page
     [HttpGet("page/{page}")]
     public async Task<ActionResult<List<Park>>> GetPages(int page, int pageSize)
     {
@@ -101,7 +102,7 @@ namespace ParksLookUpAPI.Controllers
       return Ok(response);
     }
 
-    // GET: api/parks/random
+    // GET: api/v2/parks/random
     [HttpGet("random")]
     public async Task<ActionResult<Park>> GetRandomPark()
     {
@@ -110,7 +111,7 @@ namespace ParksLookUpAPI.Controllers
       return parks[randomPark];
     }
 
-    // POST api/Parks
+    // POST api/v2/Parks
     [HttpPost]
     public async Task<ActionResult<Park>> Post([FromBody] Park park)
     {
@@ -119,7 +120,7 @@ namespace ParksLookUpAPI.Controllers
       return CreatedAtAction(nameof(GetPark), new { id = park.ParkId }, park);
     }
 
-        // PUT: api/Animals/{id}
+        // PUT: api/v2/Animals/{id}
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, Park park)
     {
@@ -154,7 +155,7 @@ namespace ParksLookUpAPI.Controllers
       return _db.Parks.Any(e => e.ParkId == id);
     }
 
-    // DELETE: api/Parks/{id}
+    // DELETE: api/v2/Parks/{id}
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeletePark(int id)
     {
