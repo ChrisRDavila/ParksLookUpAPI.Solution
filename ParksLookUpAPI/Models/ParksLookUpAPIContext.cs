@@ -17,7 +17,7 @@ namespace ParksLookUpAPI.Models
           new Park { ParkId = 1, Name = "Zion", State = "Utah", Features = "the Narrows", Rating = 8 },
           new Park { ParkId = 2, Name = "Glacier", State = "Montana", Features = "The Sun Road", Rating = 9 },
           new Park { ParkId = 3, Name = "Yosemite", State = "California", Features = "Half Dome", Rating = 7 },
-          new Park { ParkId = 4, Name = "The Geand Tetons", State = "Wyonming", Features = "Jenny Lake", Rating = 7 }
+          new Park { ParkId = 4, Name = "The Grand Tetons", State = "Wyoming", Features = "Jenny Lake", Rating = 7 }
         );
     }
   }
