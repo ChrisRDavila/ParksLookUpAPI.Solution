@@ -97,30 +97,36 @@ GET requests to `http://localhost:5000/api/{version}/parks/` can optionally incl
 | state       | String      | not required | Returns park names with a matching state value |
 | features    | String      | not required | Returns park names with a matching features value |
 | filterRating  | Int32      | not required | Returns park names that have a rating value that is greater than or equal to the specified filterRating value |
-| page  | Number      | not required | Returns park names contained in the 2 item page based on parameters|
+| page  | Number      | not required | Returns park names contained in the 2 item page based on parameters given|
 
-The following query will return all  destinations with a country value of "China":
-
-```
-GET http://localhost:5000/api/{version}/travels?country=china
-```
-
-The following query will return all travel destinations with the city "Beijing":
+The following query will return a park with a name value of "Yellowstone":
 
 ```
-GET http://localhost:5000/api/{version}/travels?city=beijing
+GET http://localhost:5000/api/{v2}/parks?name=yellowstone
 ```
 
-The following query will return all travel destinations with a raing of 3 or higher:
+The following query will return all the park names with the state value of "Montana":
 
 ```
-GET http://localhost:5000/api/{version}/travels?filterRating=3
+GET http://localhost:5000/api/{v2}/parks?state=montana
+```
+
+The following query will return all the park names with the features value of "Grand Prismatic":
+
+```
+GET http://localhost:5000/api/{v2}/parks?features=grand%20prismatic
+```
+
+The following query will return all park names with a rating of 3 or higher:
+
+```
+GET http://localhost:5000/api/{v2}/parks?filterRating=3
 ```
 
 The following query will return all travel destinations in page 2:
 
 ```
-GET http://localhost:5000/api/{version}/travels?page=2
+GET http://localhost:5000/api/{v2}/parks?page=2
 ```
 
 You can include multiple query strings by separating them with an `&`:
@@ -170,7 +176,9 @@ Notice that the value of `travelId` needs to match the id number in the URL. In 
 
 ## Known Bugs
 
-No bugs 
+* Does not have a one to many table connection with features to allow multiple features per park
+* Does not have error handling to keep user from entering same park twice
+* Does not have client based MVC to recieve API call and allow UI functionality 
 
 ## License
 [MIT](license.txt)
