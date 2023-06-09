@@ -45,7 +45,7 @@ namespace ParksLookUpAPI.Controllers
       return await query.ToListAsync();
     }
 
-    // GET: api/Parks/4
+    // GET: api/Parks
     [HttpGet("{id}")]
     public async Task<ActionResult<Park>> GetPark(int id)
     {
@@ -68,7 +68,7 @@ namespace ParksLookUpAPI.Controllers
       return CreatedAtAction(nameof(GetPark), new { id = park.ParkId }, park);
     }
 
-        // PUT: api/Animals/4
+        // PUT: api/Animals
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, Park park)
     {
@@ -97,10 +97,26 @@ namespace ParksLookUpAPI.Controllers
 
       return NoContent();
     }
-
+    // Verify enrty in db for PUT
     private bool ParkExists(int id)
     {
       return _db.Parks.Any(e => e.ParkId == id);
+    }
+
+    // DELETE: api/Parks
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeletePark(int id)
+    {
+      Park park = await _db.Parks.FindAsync(id);
+      if (park == null)
+      {
+        return NotFound();
+      }
+
+      _db.Parks.Remove(park);
+      await _db.SaveChangesAsync();
+
+      return NoContent();
     }
   }
 }  
