@@ -89,7 +89,7 @@ Note: `{version}` is a version number and it should be replaced with a "v2" or "
 
 #### Optional Query String Parameters for GET Request
 
-GET requests to `http://localhost:5000/api/{version}/parks/` can optionally include query strings to filter or search animals.
+GET requests to `http://localhost:5000/api/{version}/parks/` can optionally include query strings to filter or search parks.
 
 | Parameter   | Type        |  Required    | Description |
 | ----------- | ----------- | -----------  | ----------- |
@@ -207,7 +207,7 @@ Example JSON response:
   "pageSize": 2
 }
 ```
-The following query will return all travel destinations in page 2:
+The following query will return all park destinations on page 2:
 
 ```
 GET http://localhost:5000/api/{v2}/parks?page=2

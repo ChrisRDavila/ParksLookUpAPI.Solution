@@ -47,7 +47,7 @@ namespace ParksLookUpAPI.Controllers.V1
       return CreatedAtAction(nameof(GetPark), new { id = park.ParkId }, park);
     }
 
-        // PUT: api/v1/Animals/{id}
+        // PUT: api/v1/parks/{id}
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, Park park)
     {

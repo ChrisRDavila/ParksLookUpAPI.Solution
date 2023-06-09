@@ -17,7 +17,7 @@ namespace ParksLookUpAPI.Controllers.V2
       _db = db;
     }
 
-      // GET: api/v2/travels
+      // GET: api/v2/parks
     [HttpGet]
     public async Task<IActionResult>  Get(string name, string state, string features, int filterRating, int? page)
     {
@@ -120,7 +120,7 @@ namespace ParksLookUpAPI.Controllers.V2
       return CreatedAtAction(nameof(GetPark), new { id = park.ParkId }, park);
     }
 
-        // PUT: api/v2/Animals/{id}
+        // PUT: api/v2/parks/{id}
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, Park park)
     {
