@@ -61,35 +61,6 @@ namespace ParksLookUpAPI.Controllers
 
       return Ok(response);      
     }
-    
-    // GET api/parks
-    // [HttpGet]
-    // public async Task<List<Park>> Get(string name, string state, string features, int minimum_rating)
-    // {
-    //   IQueryable<Park> query = _db.Parks.AsQueryable();
-
-    //   if (name != null)
-    //   {
-    //     query = query.Where(entry => entry.Name == name);
-    //   }
-
-    //   if (state != null)
-    //   {
-    //     query = query.Where(entry => entry.State == state);
-    //   }
-
-    //   if (features != null)
-    //   {
-    //     query = query.Where(entry => entry.Features == features);
-    //   }
-
-    //   if (minimum_rating > 0)
-    //   {
-    //     query = query.Where(entry => entry.Rating >= minimum_rating);
-    //   }
-
-    //   return await query.ToListAsync();
-    // }
 
     // GET: api/Parks/{id}
     [HttpGet("{id}")]
@@ -128,6 +99,15 @@ namespace ParksLookUpAPI.Controllers
         PageSize = pageSize
       };
       return Ok(response);
+    }
+
+    // GET: api/parks/random
+    [HttpGet("random")]
+    public async Task<ActionResult<Park>> GetRandomPark()
+    {
+      List<Park> parks = await _db.Parks.ToListAsync();
+      int randomPark = new Random().Next(parks.Count);
+      return parks[randomPark];
     }
 
     // POST api/Parks
