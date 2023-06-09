@@ -58,5 +58,14 @@ namespace ParksLookUpAPI.Controllers
 
       return park;
     }
+
+    // POST api/Parks
+    [HttpPost]
+    public async Task<ActionResult<Park>> Post([FromBody] Park park)
+    {
+      _db.Parks.Add(park);
+      await _db.SaveChangesAsync();
+      return CreatedAtAction(nameof(GetPark), new { id = park.ParkId }, park);
+    }
   }
 }    
