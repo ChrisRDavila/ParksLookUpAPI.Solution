@@ -132,44 +132,42 @@ GET http://localhost:5000/api/{v2}/parks?page=2
 You can include multiple query strings by separating them with an `&`:
 
 ```
-GET http://localhost:5000/api/{version}/travels?country=china&filterRating=3
+GET http://localhost:5000/api/{v2}/parks?state=montana&filterRating=4
 ```
 
 #### Additional Requirements for POST Request
 
-When making a POST request to `http://localhost:5000/api{version}//travels/`, you need to include a **body**. Here's an example body in JSON:
+When making a POST request to `http://localhost:5000/api/{version}/parks/`, you need to include a **body** but exclude the parks `parkId` property. Here's an example body in JSON:
 
 ```json
 {
-  "destination": "Great Wall",
-  "city": "Beijing",
-  "country": "China",
-  "review": "Good",
-  "rating": 10,
-  "date": "2024-06-06"
+  "name": "Yellowstone",
+  "state": "Montana",
+  "features": "Old Faithful",
+  "rating": 5,
 }
 ```
 
+Notice that there there is no `parkId` property included as this property is Auto Incremented upon POST request
+
 #### Additional Requirements for PUT Request
 
-When making a PUT request to `http://localhost:5000/api/{version}/travels/{id}`, you need to include a **body** that includes the travel's `travelId` property. Here's an example body in JSON:
+When making a PUT request to `http://localhost:5000/api/{version}/parks/{id}`, you need to include a **body** that includes the park's `parkId` property of a park that has already exists. Verification can be done through a GET all query or viewing the database in MySQL workbench. Here's an example body in JSON:
 
 ```json
 {
-  "travelId": 10,
-  "destination": "Great Wall",
-  "city": "Beijing",
-  "country": "China",
-  "review": "Good",
-  "rating": 10,
-  "date": "2024-06-06"
+  "parkId": 10,
+  "name": "Yellowstone",
+  "state": "Montana",
+  "features": "Old Faithful",
+  "rating": 5,
 }
 ```
 
 And here's the PUT request we would send the previous body to:
 
 ```
-http://localhost:5000/api/{version}/travels/10
+http://localhost:5000/api/{version}/parks/10
 ```
 
 Notice that the value of `travelId` needs to match the id number in the URL. In this example, they are both 10.
@@ -179,7 +177,8 @@ Notice that the value of `travelId` needs to match the id number in the URL. In 
 * Does not have a one to many table connection with features to allow multiple features per park
 * Does not have error handling to keep user from entering same park twice
 * Does not have client based MVC to recieve API call and allow UI functionality 
+* needs error handling to generate new POST or edit with PUT in place or previously DELETE'd entries
 
 ## License
-[MIT](license.txt)
+[MIT]()
 Copyright (c) 2023 Chris Ross Davila
