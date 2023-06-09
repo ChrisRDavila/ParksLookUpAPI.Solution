@@ -16,36 +16,82 @@ namespace ParksLookUpAPI.Controllers
       _db = db;
     }
 
-    // GET api/parks
+      // GET: api/travels
     [HttpGet]
-    public async Task<List<Park>> Get(string name, string state, string features, int minimum_rating)
+    public async Task<IActionResult>  Get(string name, string state, string features, int filterRating, int? page)
     {
       IQueryable<Park> query = _db.Parks.AsQueryable();
 
       if (name != null)
       {
-        query = query.Where(entry => entry.Name == name);
+        query = query.Where(e => e.Name == name);
       }
 
       if (state != null)
       {
-        query = query.Where(entry => entry.State == state);
+        query = query.Where(e => e.State == state);
       }
 
       if (features != null)
       {
-        query = query.Where(entry => entry.Features == features);
+        query = query.Where(e => e.Features == features);
       }
 
-      if (minimum_rating > 0)
+      if (filterRating > 0)
       {
-        query = query.Where(entry => entry.Rating >= minimum_rating);
+        query = query.Where(entry => entry.Rating >= filterRating);
       }
 
-      return await query.ToListAsync();
-    }
+      int pageCount = query.Count();
+      int pageSize = 2;
+      int currentPage = page ?? 1;
 
-    // GET: api/Parks
+      var parks = await query
+        .Skip((currentPage - 1) * pageSize)
+        .Take(pageSize)
+        .ToListAsync();
+
+      var response = new Pagination
+      {
+        Parks = parks,
+        PageItems  = pageCount,
+        CurrentPage = currentPage,
+        PageSize = pageSize         
+      };
+
+      return Ok(response);      
+    }
+    
+    // GET api/parks
+    // [HttpGet]
+    // public async Task<List<Park>> Get(string name, string state, string features, int minimum_rating)
+    // {
+    //   IQueryable<Park> query = _db.Parks.AsQueryable();
+
+    //   if (name != null)
+    //   {
+    //     query = query.Where(entry => entry.Name == name);
+    //   }
+
+    //   if (state != null)
+    //   {
+    //     query = query.Where(entry => entry.State == state);
+    //   }
+
+    //   if (features != null)
+    //   {
+    //     query = query.Where(entry => entry.Features == features);
+    //   }
+
+    //   if (minimum_rating > 0)
+    //   {
+    //     query = query.Where(entry => entry.Rating >= minimum_rating);
+    //   }
+
+    //   return await query.ToListAsync();
+    // }
+
+    // GET: api/Parks/{id}
     [HttpGet("{id}")]
     public async Task<ActionResult<Park>> GetPark(int id)
     {
@@ -93,7 +139,7 @@ namespace ParksLookUpAPI.Controllers
       return CreatedAtAction(nameof(GetPark), new { id = park.ParkId }, park);
     }
 
-        // PUT: api/Animals
+        // PUT: api/Animals/{id}
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, Park park)
     {
@@ -128,7 +174,7 @@ namespace ParksLookUpAPI.Controllers
       return _db.Parks.Any(e => e.ParkId == id);
     }
 
-    // DELETE: api/Parks
+    // DELETE: api/Parks/{id}
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeletePark(int id)
     {
