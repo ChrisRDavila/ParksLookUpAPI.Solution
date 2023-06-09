@@ -59,6 +59,31 @@ namespace ParksLookUpAPI.Controllers
       return park;
     }
 
+    // GET: api/Parks/page
+    [HttpGet("page/{page}")]
+    public async Task<ActionResult<List<Park>>> GetPages(int page, int pageSize)
+    {
+        if (_db.Parks == null)
+        return NotFound();
+
+      int pageCount = _db.Parks.Count();
+      pageSize = 2;
+
+      var parks = await _db.Parks
+        .Skip((page - 1) * pageSize)
+        .Take(pageSize)
+        .ToListAsync();
+
+        var response = new Pagination
+      {
+        Parks = parks,
+        PageItems = pageCount,
+        CurrentPage = page,
+        PageSize = pageSize
+      };
+      return Ok(response);
+    }
+
     // POST api/Parks
     [HttpPost]
     public async Task<ActionResult<Park>> Post([FromBody] Park park)
@@ -118,5 +143,7 @@ namespace ParksLookUpAPI.Controllers
 
       return NoContent();
     }
+
+    
   }
 }  
