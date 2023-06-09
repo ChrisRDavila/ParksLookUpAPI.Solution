@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ParksLookUpAPI.Models;
 using System;
 
-namespace ParksLookUpAPI.Controllers
+namespace ParksLookUpAPI.Controllers.V2
 {
   [ApiController]
   [Route("api/v{version:apiVersion}/[controller]")]
