@@ -79,13 +79,13 @@ namespace ParksLookUpAPI.Controllers.V2
 
     // GET: api/v2/Parks/page
     [HttpGet("page/{page}")]
-    public async Task<ActionResult<List<Park>>> GetPages(int page, int pageSize)
+    public async Task<ActionResult<List<Park>>> GetPages(int page)
     {
         if (_db.Parks == null)
         return NotFound();
 
       int pageCount = _db.Parks.Count();
-      pageSize = 2;
+      int pageSize = 2;
 
       var parks = await _db.Parks
         .Skip((page - 1) * pageSize)
