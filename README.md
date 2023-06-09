@@ -180,5 +180,5 @@ Notice that the value of `travelId` needs to match the id number in the URL. In 
 * needs error handling to generate new POST or edit with PUT in place or previously DELETE'd entries
 
 ## License
-[MIT]()
+[MIT](https://github.com/ChrisRDavila/ParksLookUpAPI.Solution/blob/main/License.txt)
 Copyright (c) 2023 Chris Ross Davila
