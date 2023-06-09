@@ -45,7 +45,7 @@ namespace ParksLookUpAPI.Controllers
       return await query.ToListAsync();
     }
 
-    // GET: api/Parks/5
+    // GET: api/Parks/4
     [HttpGet("{id}")]
     public async Task<ActionResult<Park>> GetPark(int id)
     {
@@ -67,5 +67,40 @@ namespace ParksLookUpAPI.Controllers
       await _db.SaveChangesAsync();
       return CreatedAtAction(nameof(GetPark), new { id = park.ParkId }, park);
     }
+
+        // PUT: api/Animals/4
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Put(int id, Park park)
+    {
+      if (id != park.ParkId)
+      {
+        return BadRequest();
+      }
+
+      _db.Parks.Update(park);
+
+      try
+      {
+        await _db.SaveChangesAsync();
+      }
+      catch (DbUpdateConcurrencyException)
+      {
+        if (!ParkExists(id))
+        {
+          return NotFound();
+        }
+        else
+        {
+          throw;
+        }
+      }
+
+      return NoContent();
+    }
+
+    private bool ParkExists(int id)
+    {
+      return _db.Parks.Any(e => e.ParkId == id);
+    }
   }
-}//    
+}  
