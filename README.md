@@ -1,45 +1,177 @@
-# (Application Name) remove parens
+# Parks Look Up API
 
-#### (Brief Description of Application) remove parens
+#### _Chris Ross Davila_
 
-#### By (Your Name Here) remove parans
+#### This is an API project using C#/Dotnet. Clients can send a API call request to this project and retrieve data from data base with full CRUD functionality.  
 
 ## Technologies Used
 
-* _dot net 6_
-* _cshtml_
-* _C#_
-* _ASP Core MVC_
-_MS Build_
-
+* Git
+* C#
+* dotnet script(.NET 6.0 CLI)
+* .NET
+* Swagger
+* RestSharp
+* Entity Framework Core
+* JSON Web Token Authentication
+* MySQL Workbench
+* VS code
 
 ## Description
 
-## Setup/Installation Requirements
+* A user should be able to GET, POST, PUT and DELETE parks
+* A user can choose between V1 and V2 version of ParksLookUpAPI.
+* In API version v1, only basic CRUD functionality is deployed 
+* In API version v2, user can search parkss by name, state , features, page and filter ratings above desire input level. User can search by any variation of the above parameters in unison or solo
+* In v2 user can also look up random destinations
 
-<!-- Going forward, don't forget to include setup instructions in your README for an appsettings.json with a database connection string. -->
+### Set Up and Run Project
 
-* _1. Clone this repo._
-* _X. _dotnet add package MySqlConnector -v 2.2.0_
-* _8. _create the file appsettings.json, and what code to include in it. We recommend using the above formatting and directing users to replace [YOUR-USERNAME-HERE] and [YOUR-PASSWORD-HERE] with the user's own user and password values. also add [YOUR-DB-NAME] with database used_
-* _this format -> 
-<!-- {
+1. Clone this repo.
+2. Open the terminal and navigate to this project's production directory called "ParksLookUpAPI".
+3. Within the production directory "ParksLookUpAPI", create two new files: `appsettings.json` and `appsettings.Development.json`.
+4. Within `appsettings.json`, put in the following code. Make sure to replacing the `uid` and `pwd` values in the MySQL database connection string with your own username and password for MySQL. Also include desired value for `database` to create a new database later:
+
+```json
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
   "ConnectionStrings": {
-    "DefaultConnection": "Server=localhost;Port=3306;database=[YOUR-DB-NAME];uid=[YOUR-USER-HERE];pwd=[YOUR-PASSWORD-HERE];"
+    "DefaultConnection": "Server=localhost;Port=3306;database=[YOUR-DATA-BASE];uid=[YOUR-USER-HERE];pwd=[YOUR-PASSWORD];"
   }
-} -->
-* _2. Open your terminal (e.g., Terminal or GitBash) and navigate to this project's production directory called "ProjectFile"._
-* _3. In the command line, run the command `\$ dotnet run` to compile and execute the console application. Since this is a console application, you'll interact with it through text commands in your terminal._
-* _4. Optionally, you can run `\$ dotnet build` to compile this console app without running it._
-* _5. Use `\$ dotnet test run` in the Test directory to run test on the application_
-* _6. use `\$ dotnet watch run` to cycle the server_
-* _7. use `\$ dotnet watch run --launch-profile "production"` to run in production mode_
+}
+```
 
+5. Within `appsettings.Development.json`, add the following code:
+
+```json
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Trace",
+      "Microsoft.AspNetCore": "Information",
+      "Microsoft.Hosting.Lifetime": "Information"
+    }
+  }
+}
+```
+
+6. Create the database using the migrations in the ParksLookUpAPI project. Open your shell (e.g., Terminal or GitBash) to the production directory "ParksLookUpAPI", and run `dotnet ef database update`. 
+7. Within the production directory "ParksLookUpAPI", run `dotnet watch run --launch-profile "ParksLookUpAPI-Production"` in the command line to start the project in production mode with a watcher. 
+8. To optionally further build out this project in development mode, start the project with `dotnet watch run` in the production directory "ParksLookUpAPI".
+9. Use your program of choice to make API calls. In your API calls, use the domain _http://localhost:5000_. Keep reading to learn about all of the available endpoints.
+
+## Testing the API Endpoints
+
+You are welcome to test this API via [Postman](https://www.postman.com/), or access the [Swagger UI](https://localhost:5001/swagger/index.html)  
+
+### Available Endpoints
+
+```
+GET http://localhost:5000/api/{version}/parks/
+POST http://localhost:5000/api/{version}/parks/
+GET http://localhost:5000/api/{version}/parks/{id}
+PUT http://localhost:5000/api/{version}/parks/{id}
+DELETE http://localhost:5000/api/{version}/parks/{id}
+GET http://localhost:5000/api/{v2}/parks/page/{page}
+GET http://localhost:5000/api/{v2}/parks/random
+
+
+```
+
+Note: `{version}` is a version number and it should be replaced with a "v2" or "v1"; `{id}` is a variable and it should be replaced with the id number of the park data entry you want to GET, PUT or DELETE.
+
+#### Optional Query String Parameters for GET Request
+
+GET requests to `http://localhost:5000/api/{version}/parks/` can optionally include query strings to filter or search animals.
+
+| Parameter   | Type        |  Required    | Description |
+| ----------- | ----------- | -----------  | ----------- |
+| name        | String      | not required | Returns park name with a matching name value |
+| state       | String      | not required | Returns park names with a matching state value |
+| features    | String      | not required | Returns park names with a matching features value |
+| filterRating  | Int32      | not required | Returns park names that have a rating value that is greater than or equal to the specified filterRating value |
+| page  | Number      | not required | Returns park names contained in the 2 item page based on parameters|
+
+The following query will return all  destinations with a country value of "China":
+
+```
+GET http://localhost:5000/api/{version}/travels?country=china
+```
+
+The following query will return all travel destinations with the city "Beijing":
+
+```
+GET http://localhost:5000/api/{version}/travels?city=beijing
+```
+
+The following query will return all travel destinations with a raing of 3 or higher:
+
+```
+GET http://localhost:5000/api/{version}/travels?filterRating=3
+```
+
+The following query will return all travel destinations in page 2:
+
+```
+GET http://localhost:5000/api/{version}/travels?page=2
+```
+
+You can include multiple query strings by separating them with an `&`:
+
+```
+GET http://localhost:5000/api/{version}/travels?country=china&filterRating=3
+```
+
+#### Additional Requirements for POST Request
+
+When making a POST request to `http://localhost:5000/api{version}//travels/`, you need to include a **body**. Here's an example body in JSON:
+
+```json
+{
+  "destination": "Great Wall",
+  "city": "Beijing",
+  "country": "China",
+  "review": "Good",
+  "rating": 10,
+  "date": "2024-06-06"
+}
+```
+
+#### Additional Requirements for PUT Request
+
+When making a PUT request to `http://localhost:5000/api/{version}/travels/{id}`, you need to include a **body** that includes the travel's `travelId` property. Here's an example body in JSON:
+
+```json
+{
+  "travelId": 10,
+  "destination": "Great Wall",
+  "city": "Beijing",
+  "country": "China",
+  "review": "Good",
+  "rating": 10,
+  "date": "2024-06-06"
+}
+```
+
+And here's the PUT request we would send the previous body to:
+
+```
+http://localhost:5000/api/{version}/travels/10
+```
+
+Notice that the value of `travelId` needs to match the id number in the URL. In this example, they are both 10.
 
 ## Known Bugs
 
-* _Any known issues_
-* _should go here_
+No bugs 
 
 ## License
-[MIT](https://yourlicesnepage)
+[MIT](license.txt)
+Copyright (c) 2023 Chris Ross Davila
