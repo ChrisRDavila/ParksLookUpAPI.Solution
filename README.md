@@ -105,10 +105,53 @@ The following query will return a park with a name value of "Yellowstone":
 GET http://localhost:5000/api/{v2}/parks?name=yellowstone
 ```
 
+Example JSON response:
+```json
+{
+  "parks": [
+    {
+      "parkId": 5,
+      "name": "Yellowstone",
+      "state": "Montana",
+      "features": "Grand Prismatic",
+      "rating": 6
+    }
+  ],
+  "pageItems": 1,
+  "currentPage": 1,
+  "pageSize": 2
+}
+```
+
 The following query will return all the park names with the state value of "Montana":
+
 
 ```
 GET http://localhost:5000/api/{v2}/parks?state=montana
+```
+Example JSON response:
+```json
+{
+  "parks": [
+    {
+      "parkId": 2,
+      "name": "Glacier",
+      "state": "Montana",
+      "features": "The Sun Road",
+      "rating": 9
+    },
+    {
+      "parkId": 5,
+      "name": "Yellowstone",
+      "state": "Montana",
+      "features": "Grand Prismatic",
+      "rating": 6
+    }
+  ],
+  "pageItems": 2,
+  "currentPage": 1,
+  "pageSize": 2
+}
 ```
 
 The following query will return all the park names with the features value of "Grand Prismatic":
@@ -117,16 +160,82 @@ The following query will return all the park names with the features value of "G
 GET http://localhost:5000/api/{v2}/parks?features=grand%20prismatic
 ```
 
+Example JSON response:
+```json
+{
+  "parks": [
+    {
+      "parkId": 5,
+      "name": "Yellowstone",
+      "state": "Montana",
+      "features": "Grand Prismatic",
+      "rating": 6
+    }
+  ],
+  "pageItems": 1,
+  "currentPage": 1,
+  "pageSize": 2
+}
+```
 The following query will return all park names with a rating of 3 or higher:
 
 ```
 GET http://localhost:5000/api/{v2}/parks?filterRating=3
 ```
 
+Example JSON response:
+```json
+{
+  "parks": [
+    {
+      "parkId": 1,
+      "name": "Zion",
+      "state": "Utah",
+      "features": "the Narrows",
+      "rating": 8
+    },
+    {
+      "parkId": 2,
+      "name": "Glacier",
+      "state": "Montana",
+      "features": "The Sun Road",
+      "rating": 9
+    }
+  ],
+  "pageItems": 5,
+  "currentPage": 1,
+  "pageSize": 2
+}
+```
 The following query will return all travel destinations in page 2:
 
 ```
 GET http://localhost:5000/api/{v2}/parks?page=2
+```
+
+Example JSON response:
+```json
+{
+  "parks": [
+    {
+      "parkId": 3,
+      "name": "Yosemite",
+      "state": "California",
+      "features": "Half Dome",
+      "rating": 7
+    },
+    {
+      "parkId": 4,
+      "name": "The Grand Tetons",
+      "state": "Wyoming",
+      "features": "Jenny Lake",
+      "rating": 7
+    }
+  ],
+  "pageItems": 5,
+  "currentPage": 2,
+  "pageSize": 2
+}
 ```
 
 You can include multiple query strings by separating them with an `&`:
