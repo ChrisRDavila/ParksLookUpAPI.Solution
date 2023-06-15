@@ -286,8 +286,12 @@ Notice that the value of `travelId` needs to match the id number in the URL. In 
 * Does not have a one to many table connection with features to allow multiple features per park
 * Does not have error handling to keep user from entering same park twice
 * Does not have client based MVC to recieve API call and allow UI functionality 
+* commits realted to the MVC side of the project can be found on this attached repo [ParksLookIpAPI.Solution](https://github.com/ChrisRDavila/ParksLookup.Solution.git)
 * needs error handling to generate new POST or edit with PUT in place or previously DELETE'd entries
+
 
 ## License
 [MIT](https://github.com/ChrisRDavila/ParksLookUpAPI.Solution/blob/main/License.txt)
 Copyright (c) 2023 Christopher Ross Davila
+
+
